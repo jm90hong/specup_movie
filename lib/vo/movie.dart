@@ -11,7 +11,8 @@ class Movie {
   factory Movie.fromJson(Map<String, dynamic> map){
     return Movie(
       movieName: map['movieNm'],
-      openDate: map['openDt']
+      openDate: map['openDt'],
+
     );
   }
 }

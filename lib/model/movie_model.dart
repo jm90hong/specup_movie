@@ -11,6 +11,7 @@ class MovieModel extends ChangeNotifier{
 
 
   void loadMovies({required String date}) async{
+    print(date);
     movies=[];
     Uri url = Uri.parse('http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json');
     var requestUrlWithParam = url.replace(queryParameters:{
@@ -18,14 +19,14 @@ class MovieModel extends ChangeNotifier{
       'targetDt':date.toString(),
     });
     var response = await http.get(requestUrlWithParam);
-    var jsonList = jsonDecode(response.body);
-    for(int i=0;i<jsonList.length;i++){
-      Movie mv = Movie.fromJson(jsonList[i]);
+    print(response.body);
+    var json = jsonDecode(response.body);
+    var list = json['boxOfficeResult']['dailyBoxOfficeList'];
+    for(int i=0;i<list.length;i++){
+      Movie mv = Movie.fromJson(list[i]);
       movies.add(mv);
     }
     notifyListeners();
   }
-
-
-
 }
+
